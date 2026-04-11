@@ -1,17 +1,38 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block main %}
 
-<b>Nomi : </b>{{car.name}}<hr> <b>Modeli : </b>{{ car.model }}<hr>
-<b>Narxi :</b> {{car.price}}<hr> <b> Avtomobil haqida :</b> {{ car.text }}<hr>
+<div class="row mt-5">
 
-<a href="{% url 'home' %}">Ortga</a>
-</body>
-</html>
+    <!-- CATEGORY -->
+    <div class="col-md-3">
+        <div class="list-group">
+            {% for category in categories %}
+                <a href="{% url 'car_by_category' category.pk %}" class="list-group-item list-group-item-action">
+                    {{ category }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- DETAIL -->
+    <div class="col-md-9">
+
+        <div class="card">
+
+            {% if car.image %}
+                <img src="{{ car.image.url }}" class="card-img-top" style="height:400px; object-fit:cover;">
+            {% endif %}
+
+            <div class="card-body">
+                <h2>{{ car.name }}</h2>
+                <p>{{ car.text }}</p>
+                <small class="text-muted">{{ car.updated }}</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock main %}
