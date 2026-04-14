@@ -8,3 +8,22 @@ class CarForm(forms.ModelForm):
         # fields = '__all__'
         # fields = ['name', 'text', 'price', 'image', 'category', 'published']
         exclude = ['views']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control'
+            }),
+            'category': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+            'published': forms.CheckboxInput(attrs={
+                'class': 'checkbox-inline'
+            })
+
+        }
