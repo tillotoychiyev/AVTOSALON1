@@ -29,7 +29,7 @@
                 <small class="text-muted">{{ car.updated }}</small>
             </div>
             {% if request.user.is_staff %}
-            <div class="card-body d-flex justify-content_between">
+            <div class="card-body d-flex justify-content-between w-100">
                 <div>
                     <a href="{% url 'delete_car' car.pk %}" class="btn btn-danger">O'chirish</a>
                 </div>

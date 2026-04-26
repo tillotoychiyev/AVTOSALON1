@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 
 from django.http import HttpRequest, HttpResponse
-from pydantic.v1.error_wrappers import error_dict
 
 from .models import Car, Category
 from .forms import CarForm
@@ -45,14 +44,16 @@ def add_car(request: HttpRequest):
             if form.is_valid():
                 car = form.save()
                 return redirect('detail', car_id=car.id)
-        form = CarForm()
+        else:
+            form = CarForm()
         context = {
             'form':form
         }
         return render(request, 'main/add_car.html', context)
     else:
         return redirect('home')
-    
+
+
 def update_car(request, pk: int):
     if request.user.is_staff:
         car = Car.objects.get(pk=pk)

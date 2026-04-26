@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import ValidationError
 
 class Category(models.Model):
     name = models.CharField(max_length=150, unique=True)
@@ -26,3 +27,9 @@ class Car(models.Model):
 
     def __repr__(self):
         return f"PK: {self.pk}. {self.name}"
+
+    def clean(self):
+        if self.price <= 0:
+            raise ValidationError("Avtomobil narxi '0' dan katta bo'lishi shart!!!")
+        if not self.name.islower():
+            raise ValidationError("Avtomobil nomi kichik haflardan iborat bo'lishi kerak!!!")
