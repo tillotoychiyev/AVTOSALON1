@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 
 from .models import Car, Category
-from .forms import CarForm
+from .forms import CarForm, CommentForm
 
 def home(request: HttpRequest):
     categories = Category.objects.all()
@@ -33,7 +33,8 @@ def car_detail(request, car_id: int):
     context = {
         'categories':categories,
         'car':car,
-        'title':car.name
+        'title':car.name,
+        'form':CommentForm()
     }
     return render(request, 'main/detail.html', context)
 
@@ -52,7 +53,6 @@ def add_car(request: HttpRequest):
         return render(request, 'main/add_car.html', context)
     else:
         return redirect('home')
-
 
 def update_car(request, pk: int):
     if request.user.is_staff:
@@ -82,5 +82,14 @@ def delete_car(request, pk: int):
         return render(request, 'main/confirm_delete.html', context)
     else:
         return redirect('home')
+
 def about(request: HttpRequest):
     return render(request, 'main/about.html')
+
+# -------------- start comment --------------------
+
+def created_comment(request):
+    pass
+
+# -------------- end comment --------------------
+

@@ -1,6 +1,8 @@
 from django import forms
+from django.core.validators import ValidationError
+from .models import Car, Category, Comment
 
-from .models import Car, Category
+
 
 class CarForm(forms.ModelForm):
     class Meta:
@@ -27,3 +29,27 @@ class CarForm(forms.ModelForm):
             })
 
         }
+        labels = {
+            'name':'Nomi: ✏️',
+            'price':'Narxi: 💵',
+            'text':'Batafsil ma\'lumot ✏️',
+            'image':'Avtomobil rasmi 🖼',
+            'video':'Avtomobil haqida qisqa obzor🎬'
+        }
+
+    def clean_price(self):
+        cleaned_data = super().clean()
+        price = cleaned_data.get('price')
+        if price <= 0:
+            raise ValidationError("Avtomobil narxi '0' dan katta bo'lishi shart!!!")
+        return price
+
+    def clean_name(self):
+        cleaned_data = super().clean()
+        name = cleaned_data.get('name')
+        if not name.islower():
+            raise ValidationError("Avtomobil nomi kichik haflardan iborat bo'lishi kerak!!!")
+        return name
+
+class CommentForm(forms.Form):
+    text = forms.CharField(max_length=500)
