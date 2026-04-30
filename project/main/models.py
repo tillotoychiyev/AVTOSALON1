@@ -3,6 +3,8 @@ from tkinter.constants import CASCADE
 from django.db import models
 from django.core.validators import ValidationError, FileExtensionValidator
 from django.contrib.auth.models import User
+
+
 class Category(models.Model):
     name = models.CharField(max_length=150, unique=True)
 
